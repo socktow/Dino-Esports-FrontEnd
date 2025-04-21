@@ -33,19 +33,18 @@ export default function Home() {
 
   return (
     <main className="min-h-screen relative overflow-hidden bg-gradient-to-b from-gray-900 to-black">
-      {/* Background GIFs */}
-      <div className="absolute inset-0 flex">
-        <div className="w-full relative" style={{ height: '1080px' }}>
-          <Image 
-            src="/image/evelyn.gif" 
-            alt="Evelyn Background" 
-            fill
-            className="object-cover"
-            priority
-            unoptimized
-          />
-          <div className="absolute inset-0 opacity-60 bg-black"></div>
-        </div>
+      {/* Video Background */}
+      <div className="absolute inset-0 w-full h-full">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/image/ahri.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-black/70"></div>
       </div>
       
       {/* Animated background elements */}

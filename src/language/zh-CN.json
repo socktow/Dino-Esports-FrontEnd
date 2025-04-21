@@ -1,0 +1,43 @@
+{
+  "common": {
+    "login": "登录",
+    "signup": "注册",
+    "logout": "退出",
+    "username": "用户名",
+    "password": "密码",
+    "email": "邮箱",
+    "processing": "处理中...",
+    "error": "错误",
+    "success": "成功"
+  },
+  "home": {
+    "title": "Chuchu Esports",
+    "subtitle": "发现最新的电子竞技主题和赛事。探索我们的LCK、LEC、LCP和FirstStand2025内容集合。",
+    "exploreThemes": {
+      "title": "探索主题",
+      "description": "浏览我们的电子竞技主题集合，找到最适合您需求的主题。",
+      "button": "查看主题"
+    },
+    "dashboard": {
+      "title": "控制面板",
+      "description": "访问您的个性化控制面板来管理主题和设置。",
+      "button": "前往控制面板"
+    },
+    "featuredTournaments": {
+      "title": "精选赛事",
+      "LCK": "韩国联赛冠军赛",
+      "LEC": "英雄联盟欧洲冠军联赛",
+      "LCP": "英雄联盟职业联赛",
+      "FirstStand2025": "即将到来的赛事"
+    }
+  },
+  "auth": {
+    "loginSuccess": "登录成功",
+    "loginFailed": "登录失败",
+    "registerSuccess": "注册成功",
+    "registerFailed": "注册失败",
+    "emailRequired": "注册需要邮箱",
+    "userExists": "该邮箱或用户名已存在",
+    "invalidCredentials": "无效的登录信息"
+  }
+} 

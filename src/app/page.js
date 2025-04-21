@@ -1,103 +1,137 @@
-import Image from "next/image";
+'use client';
+import { useEffect, useState } from 'react';
+import AuthButton from '../components/AuthButton';
+import LanguageSelector from '../components/LanguageSelector';
+import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const { user, token } = useAuth();
+  const router = useRouter();
+  const { t } = useLanguage();
+  const [isVisible, setIsVisible] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const handleNavigate = (path) => {
+    if (!user) {
+      router.push('/auth/login');
+      return;
+    }
+    
+    // Add token to theme paths
+    if (path.startsWith('/theme/') && token) {
+      router.push(`${path}?token=${token}`);
+    } else {
+      router.push(path);
+    }
+  };
+
+  return (
+    <main className="min-h-screen relative overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+      {/* Background GIFs */}
+      <div className="absolute inset-0 flex">
+        <div className="w-full relative" style={{ height: '1080px' }}>
+          <Image 
+            src="/image/evelyn.gif" 
+            alt="Evelyn Background" 
+            fill
+            className="object-cover"
+            priority
+            unoptimized
+          />
+          <div className="absolute inset-0 opacity-60 bg-black"></div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+      
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-20 -left-20 w-60 h-60 bg-indigo-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute bottom-20 right-20 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
+      </div>
+      
+      {/* Content */}
+      <div className="relative z-10">
+        <AuthButton />
+        <LanguageSelector />
+        
+        <div className="container mx-auto px-4 py-16">
+          <div className={`text-center mb-16 transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+            <h1 className="text-6xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-indigo-300 to-purple-300 animate-gradient">
+              {t('home.title')}
+            </h1>
+            <p className="text-xl text-blue-200 max-w-2xl mx-auto">
+              {t('home.subtitle')}
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div 
+              className="group p-8 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700 hover:border-blue-500/50 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/20"
+              onClick={() => handleNavigate('/theme')}
+            >
+              <h2 className="text-2xl font-bold mb-4 text-blue-300 group-hover:text-blue-200 transition-colors">
+                {t('home.exploreThemes.title')}
+              </h2>
+              <p className="text-gray-300 mb-6 group-hover:text-gray-200 transition-colors">
+                {t('home.exploreThemes.description')}
+              </p>
+              <div className="inline-flex items-center text-blue-400 group-hover:text-blue-300 transition-colors">
+                {t('home.exploreThemes.button')}
+                <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </div>
+            </div>
+            
+            <div 
+              className="group p-8 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700 hover:border-indigo-500/50 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-500/20"
+              onClick={() => handleNavigate('/dashboard')}
+            >
+              <h2 className="text-2xl font-bold mb-4 text-indigo-300 group-hover:text-indigo-200 transition-colors">
+                {t('home.dashboard.title')}
+              </h2>
+              <p className="text-gray-300 mb-6 group-hover:text-gray-200 transition-colors">
+                {t('home.dashboard.description')}
+              </p>
+              <div className="inline-flex items-center text-indigo-400 group-hover:text-indigo-300 transition-colors">
+                {t('home.dashboard.button')}
+                <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-16 text-center">
+            <h2 className="text-3xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-indigo-300">
+              {t('home.featuredTournaments.title')}
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+              {['LCK', 'LEC', 'LCP', 'FirstStand2025'].map((tournament, index) => (
+                <div 
+                  key={tournament}
+                  className={`group p-6 rounded-xl bg-gray-800/30 backdrop-blur-sm border border-gray-700 hover:border-blue-500/50 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/20 cursor-pointer ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                  style={{ transitionDelay: `${index * 100}ms` }}
+                  onClick={() => handleNavigate(`/theme/${tournament}`)}
+                >
+                  <h3 className="text-lg font-semibold text-blue-300 mb-2 group-hover:text-blue-200 transition-colors">
+                    {tournament}
+                  </h3>
+                  <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
+                    {t(`home.featuredTournaments.${tournament}`)}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }

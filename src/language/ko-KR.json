@@ -1,0 +1,43 @@
+{
+  "common": {
+    "login": "로그인",
+    "signup": "회원가입",
+    "logout": "로그아웃",
+    "username": "사용자 이름",
+    "password": "비밀번호",
+    "email": "이메일",
+    "processing": "처리 중...",
+    "error": "오류",
+    "success": "성공"
+  },
+  "home": {
+    "title": "Chuchu Esports",
+    "subtitle": "최신 이스포츠 테마와 토너먼트를 발견하세요. LCK, LEC, LCP, FirstStand2025 컬렉션을 탐색하세요.",
+    "exploreThemes": {
+      "title": "테마 탐색",
+      "description": "이스포츠 테마 컬렉션을 둘러보고 귀하의 요구에 맞는 완벽한 테마를 찾으세요.",
+      "button": "테마 보기"
+    },
+    "dashboard": {
+      "title": "대시보드",
+      "description": "개인화된 대시보드에 접속하여 테마와 설정을 관리하세요.",
+      "button": "대시보드로 이동"
+    },
+    "featuredTournaments": {
+      "title": "주요 토너먼트",
+      "LCK": "한국 리그 챔피언십",
+      "LEC": "리그 오브 레전드 유럽 챔피언십",
+      "LCP": "리그 오브 레전드 챔피언스 프로",
+      "FirstStand2025": "다가오는 토너먼트"
+    }
+  },
+  "auth": {
+    "loginSuccess": "로그인 성공",
+    "loginFailed": "로그인 실패",
+    "registerSuccess": "회원가입 성공",
+    "registerFailed": "회원가입 실패",
+    "emailRequired": "회원가입을 위해 이메일이 필요합니다",
+    "userExists": "이미 존재하는 이메일 또는 사용자 이름입니다",
+    "invalidCredentials": "잘못된 인증 정보"
+  }
+} 

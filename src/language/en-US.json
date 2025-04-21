@@ -1,0 +1,43 @@
+{
+  "common": {
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout",
+    "username": "Username",
+    "password": "Password",
+    "email": "Email",
+    "processing": "Processing...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "home": {
+    "title": "Chuchu Esports",
+    "subtitle": "Discover the latest esports themes and tournaments. Explore our collection of LCK, LEC, LCP, and FirstStand2025 content.",
+    "exploreThemes": {
+      "title": "Explore Themes",
+      "description": "Browse through our collection of esports themes and find the perfect one for your needs.",
+      "button": "View Themes"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "Access your personalized dashboard to manage your themes and settings.",
+      "button": "Go to Dashboard"
+    },
+    "featuredTournaments": {
+      "title": "Featured Tournaments",
+      "LCK": "Korean League Championship",
+      "LEC": "League of Legends European Championship",
+      "LCP": "League of Legends Champions Pro",
+      "FirstStand2025": "Upcoming Tournament"
+    }
+  },
+  "auth": {
+    "loginSuccess": "Login successful",
+    "loginFailed": "Login failed",
+    "registerSuccess": "Registration successful",
+    "registerFailed": "Registration failed",
+    "emailRequired": "Email is required for registration",
+    "userExists": "User already exists with this email or username",
+    "invalidCredentials": "Invalid credentials"
+  }
+} 

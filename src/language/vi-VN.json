@@ -1,0 +1,56 @@
+{
+  "common": {
+    "login": "Đăng nhập",
+    "signup": "Đăng ký",
+    "logout": "Đăng xuất",
+    "username": "Tên đăng nhập",
+    "password": "Mật khẩu",
+    "email": "Email",
+    "userId": "ID người dùng",
+    "processing": "Đang xử lý...",
+    "error": "Lỗi",
+    "success": "Thành công",
+    "accountCreated": "Tài khoản được tạo vào",
+    "loading": "Đang tải..."
+  },
+  "home": {
+    "title": "Chuchu Esports",
+    "subtitle": "Khám phá các chủ đề esports và giải đấu mới nhất. Khám phá bộ sưu tập LCK, LEC, LCP và FirstStand2025 của chúng tôi.",
+    "exploreThemes": {
+      "title": "Khám phá Chủ đề",
+      "description": "Duyệt qua bộ sưu tập chủ đề esports và tìm chủ đề phù hợp với nhu cầu của bạn.",
+      "button": "Xem Chủ đề"
+    },
+    "dashboard": {
+      "title": "Bảng điều khiển",
+      "description": "Truy cập bảng điều khiển cá nhân để quản lý chủ đề và cài đặt của bạn.",
+      "button": "Đi đến Bảng điều khiển"
+    },
+    "featuredTournaments": {
+      "title": "Giải đấu nổi bật",
+      "LCK": "Giải vô địch Hàn Quốc",
+      "LEC": "Giải vô địch Châu Âu",
+      "LCP": "Giải vô địch Chuyên nghiệp",
+      "FirstStand2025": "Giải đấu sắp tới"
+    }
+  },
+  "auth": {
+    "loginSuccess": "Đăng nhập thành công",
+    "loginFailed": "Đăng nhập thất bại",
+    "registerSuccess": "Đăng ký thành công",
+    "registerFailed": "Đăng ký thất bại",
+    "emailRequired": "Email là bắt buộc cho việc đăng ký",
+    "userExists": "Người dùng đã tồn tại với email hoặc tên đăng nhập này",
+    "invalidCredentials": "Thông tin đăng nhập không hợp lệ"
+  },
+  "profile": {
+    "personalInfo": "Thông tin cá nhân",
+    "changePassword": "Đổi mật khẩu",
+    "changeEmail": "Đổi email",
+    "currentPassword": "Mật khẩu hiện tại",
+    "newPassword": "Mật khẩu mới",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "update": "Cập nhật",
+    "passwordsDontMatch": "Mật khẩu mới không khớp"
+  }
+} 

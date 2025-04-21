@@ -1,9 +1,9 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function LECTheme() {
+function LECContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [token, setToken] = useState(null);
@@ -38,5 +38,13 @@ export default function LECTheme() {
         {/* LEC theme content will go here */}
       </div>
     </div>
+  );
+}
+
+export default function LECTheme() {
+  return (
+    <Suspense fallback={<div className="min-h-screen p-8">Loading...</div>}>
+      <LECContent />
+    </Suspense>
   );
 } 

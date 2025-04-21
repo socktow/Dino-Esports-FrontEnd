@@ -1,6 +1,6 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { connectWebSocket, disconnectWebSocket } from "@/lib/websocket";
 import { parseGameData } from "@/lib/dataParser";
@@ -8,7 +8,7 @@ import Scoreboard from "./tabs/Scoreboard";
 import Scoreboardbottom from "./tabs/Scoreboardbottom";
 import Objectivetime from "./tabs/Objectivetime";
 
-export default function FirstStand2025Theme() {
+function FirstStand2025Content() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [token, setToken] = useState(null);
@@ -82,5 +82,13 @@ export default function FirstStand2025Theme() {
         <Scoreboardbottom playersdata={playersdata} players={players} />
       </div>
     </div>
+  );
+}
+
+export default function FirstStand2025Theme() {
+  return (
+    <Suspense fallback={<div className="min-h-screen p-8">Loading...</div>}>
+      <FirstStand2025Content />
+    </Suspense>
   );
 } 

@@ -1,9 +1,9 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function LCPTheme() {
+function LCPContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [token, setToken] = useState(null);
@@ -38,5 +38,13 @@ export default function LCPTheme() {
         {/* LCP theme content will go here */}
       </div>
     </div>
+  );
+}
+
+export default function LCPTheme() {
+  return (
+    <Suspense fallback={<div className="min-h-screen p-8">Loading...</div>}>
+      <LCPContent />
+    </Suspense>
   );
 } 

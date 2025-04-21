@@ -1,10 +1,8 @@
-import { useMemo } from "react";
 import Image from "next/image";
-import { getLightColor, calculateProgress } from './utils';
+import { calculateProgress } from './utils';
 
 const Atakhantime = ({ timer }) => {
   const progress = calculateProgress(timer);
-  const strokeColor = useMemo(() => getLightColor('atakhan'), ['atakhan']);
 
   if (!timer) return null;
 

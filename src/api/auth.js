@@ -1,5 +1,5 @@
 // API endpoints for authentication
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://dino-esports-back-end.vercel.app/api';
 
 /**
  * Login user with username and password

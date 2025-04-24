@@ -1,5 +1,5 @@
 // API endpoints for authentication
-const API_URL = 'https://kiemhieptinhduyen.cloud/api';
+import { API_URL } from './index';
 
 /**
  * Login user with username and password

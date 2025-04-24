@@ -1,5 +1,4 @@
-// API endpoints for user operations
-const API_URL = 'https://kiemhieptinhduyen.cloud/api';
+import { API_URL } from './index';
 
 /**
  * Get user profile

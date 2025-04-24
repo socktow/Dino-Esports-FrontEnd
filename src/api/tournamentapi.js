@@ -1,8 +1,6 @@
 // API endpoints for tournament operations
 import Cookies from 'js-cookie';
-
-const API_URL = 'https://kiemhieptinhduyen.cloud/api';
-
+import { API_URL } from './index';
 /**
  * Create a new tournament
  * @param {Object} tournamentData - Tournament data including name and logo

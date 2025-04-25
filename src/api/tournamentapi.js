@@ -13,7 +13,7 @@ export const createTournament = async (tournamentData, token) => {
         formData.append('name', tournamentData.name);
         formData.append('logo', tournamentData.logo);
 
-        const response = await fetch(`${API_URL}/tournaments`, {
+        const response = await fetch(`${API_URL}/users/tournaments`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -39,7 +39,7 @@ export const createTournament = async (tournamentData, token) => {
  */
 export const getTournaments = async () => {
     try {
-        const response = await fetch(`${API_URL}/tournaments`, {
+        const response = await fetch(`${API_URL}/users/tournaments`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -99,17 +99,13 @@ export const getTournamentById = async (tournamentId) => {
 /**
  * Update tournament
  * @param {string} tournamentId - ID of the tournament
- * @param {Object} tournamentData - Updated tournament data
+ * @param {Object} formData - Updated tournament data
  * @param {string} token - JWT token for authentication
  * @returns {Promise} - Response from the API
  */
-export const updateTournament = async (tournamentId, tournamentData, token) => {
+export const updateTournament = async (tournamentId, formData, token) => {
     try {
-        const formData = new FormData();
-        if (tournamentData.name) formData.append('name', tournamentData.name);
-        if (tournamentData.logo) formData.append('logo', tournamentData.logo);
-
-        const response = await fetch(`${API_URL}/tournaments/${tournamentId}`, {
+        const response = await fetch(`${API_URL}/users/tournaments/${tournamentId}`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -137,7 +133,7 @@ export const updateTournament = async (tournamentId, tournamentData, token) => {
  */
 export const deleteTournament = async (tournamentId, token) => {
     try {
-        const response = await fetch(`${API_URL}/tournaments/${tournamentId}`, {
+        const response = await fetch(`${API_URL}/users/tournaments/${tournamentId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -171,7 +167,7 @@ export const addTeamToTournament = async (tournamentId, teamData, token) => {
         formData.append('teamTag', teamData.teamTag);
         formData.append('logo', teamData.logo);
 
-        const response = await fetch(`${API_URL}/tournaments/${tournamentId}/teams`, {
+        const response = await fetch(`${API_URL}/users/tournaments/${tournamentId}/teams`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,

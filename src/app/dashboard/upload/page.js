@@ -9,6 +9,7 @@ const Upload = () => {
   const [tournamentDetails, setTournamentDetails] = useState(null);
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
+  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
     const fetchTournaments = async () => {
@@ -47,6 +48,17 @@ const Upload = () => {
     };
     fetchTournamentDetails();
   }, [selectedTournament]);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto p-6 text-white">
@@ -111,9 +123,45 @@ const Upload = () => {
         </div>
 
         {/* Drag & Drop */}
-        <div className="flex items-center justify-center  w-full h-full ">
-          <div className="border-2 border-dashed border-gray-600 w-full h-full flex items-center justify-center text-gray-400 rounded-lg cursor-pointer hover:border-blue-400 transition">
-            Drag & Drop Image Here
+        <div className="flex items-center justify-center w-full h-full">
+          <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center w-full">
+            {imagePreview ? (
+              <div className="relative">
+                <img 
+                  src={imagePreview} 
+                  alt="Team logo preview" 
+                  className="max-h-64 mx-auto rounded-lg"
+                />
+                <button
+                  onClick={() => setImagePreview(null)}
+                  className="absolute top-2 right-2 p-2 bg-gray-800 rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                >
+                  <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="flex justify-center">
+                  <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div className="text-gray-400">
+                  <label className="cursor-pointer">
+                    <span className="text-blue-400 hover:text-blue-300">Click to upload</span> or drag and drop
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+                <p className="text-sm text-gray-500">PNG, JPG, GIF up to 10MB</p>
+              </div>
+            )}
           </div>
         </div>
         <button className="bg-blue-500 text-white p-3 rounded-lg">Upload</button>

@@ -17,14 +17,14 @@ export default function Dashboard() {
   const handleSave = () => {
     localStorage.setItem("riotApi", riotApi);
     setIsSaved(true);
-    alert("Riot API key đã được lưu!");
+    alert("Riot API key has been saved!");
   };
 
   const handleRemove = () => {
     localStorage.removeItem("riotApi");
     setRiotApi("");
     setIsSaved(false);
-    alert("Riot API key đã được xóa!");
+    alert("Riot API key has been removed!");
   };
 
   return (

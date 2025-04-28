@@ -84,13 +84,12 @@ const TournamentConfig = () => {
       if (editingTournament) {
         const formData = new FormData();
         formData.append('name', tournament.name);
-        if (tournament.image) {
+        if (tournament.image instanceof File) {
           formData.append('logo', tournament.image);
         }
         
         const response = await updateTournament(editingTournament.tournamentId, formData, token);
         if (response.success) {
-          // Update the tournament in the state with the new data
           setTournaments(prev => 
             prev.map(t => 
               t.tournamentId === editingTournament.tournamentId 
@@ -105,7 +104,6 @@ const TournamentConfig = () => {
             ).sort((a, b) => b.tournamentId - a.tournamentId)
           );
           
-          // Reset form and editing state
           setTournament({ name: '', image: null, imagePreview: null });
           setEditingTournament(null);
           toast.success('Tournament updated successfully');
@@ -113,11 +111,18 @@ const TournamentConfig = () => {
       } else {
         const formData = new FormData();
         formData.append('name', tournament.name);
-        formData.append('logo', tournament.image);
+        if (tournament.image instanceof File) {
+          formData.append('logo', tournament.image);
+        }
+
+        // Debug log
+        console.log('FormData contents:');
+        for (let pair of formData.entries()) {
+          console.log(pair[0] + ': ' + pair[1]);
+        }
         
         const response = await createTournament(formData, token);
         if (response.success) {
-          // Add the new tournament to the state
           setTournaments(prev => 
             [...prev, response.data].sort((a, b) => b.tournamentId - a.tournamentId)
           );

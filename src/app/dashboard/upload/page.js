@@ -1,7 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
-import { getTournamentsByUser, getTournamentById } from "@/api/tournamentapi";
+import { getTournamentsByUser, getTournamentById, addTeamToTournament } from "@/api/tournamentapi";
 import { useAuth } from "../../../context/AuthContext";
+import { toast } from "react-hot-toast";
+import Cookies from "js-cookie";
 
 const Upload = () => {
   const [tournaments, setTournaments] = useState([]);
@@ -10,6 +12,12 @@ const Upload = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const [imagePreview, setImagePreview] = useState(null);
+  const [teamData, setTeamData] = useState({
+    teamName: "",
+    teamTag: "",
+    image: null
+  });
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchTournaments = async () => {
@@ -52,11 +60,80 @@ const Upload = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setTeamData(prev => ({
+        ...prev,
+        image: file
+      }));
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setTeamData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const token = Cookies.get('token');
+      if (!token) {
+        toast.error('Please login again');
+        return;
+      }
+
+      if (!selectedTournament) {
+        toast.error('Please select a tournament');
+        return;
+      }
+
+      if (!teamData.teamName || !teamData.teamTag || !teamData.image) {
+        toast.error('Please fill in all fields and upload a team logo');
+        return;
+      }
+
+      setSubmitting(true);
+
+      const formData = new FormData();
+      formData.append('teamName', teamData.teamName);
+      formData.append('teamTag', teamData.teamTag);
+      if (teamData.image instanceof File) {
+        formData.append('logo', teamData.image);
+      }
+
+      // Debug log
+      console.log('FormData contents:');
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+      }
+
+      const response = await addTeamToTournament(selectedTournament, formData, token);
+      if (response.success) {
+        toast.success('Team added successfully');
+        // Refresh tournament details
+        const updatedTournament = await getTournamentById(selectedTournament);
+        if (updatedTournament.success) {
+          setTournamentDetails(updatedTournament.data);
+        }
+        // Reset form
+        setTeamData({
+          teamName: "",
+          teamTag: "",
+          image: null
+        });
+        setImagePreview(null);
+      }
+    } catch (error) {
+      toast.error(error.message || 'Failed to add team');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -105,18 +182,24 @@ const Upload = () => {
       )}
 
       {/* Upload Box */}
-      <div className="grid grid-cols-2 md:grid-cols-2 gap-6 bg-gray-800 p-6 rounded-lg shadow-lg mb-10">
+      <form onSubmit={handleSubmit} className="grid grid-cols-2 md:grid-cols-2 gap-6 bg-gray-800 p-6 rounded-lg shadow-lg mb-10">
         {/* Inputs */}
         <div>
           <label className="block mb-2 text-gray-300">Team Name</label>
           <input
             type="text"
+            name="teamName"
+            value={teamData.teamName}
+            onChange={handleInputChange}
             placeholder="Enter team name"
             className="w-full p-3 rounded-lg bg-gray-900 text-white border border-gray-700 mb-4"
           />
           <label className="block mb-2 text-gray-300">Team Tag</label>
           <input
             type="text"
+            name="teamTag"
+            value={teamData.teamTag}
+            onChange={handleInputChange}
             placeholder="Enter team tag"
             className="w-full p-3 rounded-lg bg-gray-900 text-white border border-gray-700"
           />
@@ -133,7 +216,11 @@ const Upload = () => {
                   className="max-h-64 mx-auto rounded-lg"
                 />
                 <button
-                  onClick={() => setImagePreview(null)}
+                  type="button"
+                  onClick={() => {
+                    setImagePreview(null);
+                    setTeamData(prev => ({ ...prev, image: null }));
+                  }}
                   className="absolute top-2 right-2 p-2 bg-gray-800 rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
                 >
                   <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -164,8 +251,14 @@ const Upload = () => {
             )}
           </div>
         </div>
-        <button className="bg-blue-500 text-white p-3 rounded-lg">Upload</button>
-      </div>
+        <button 
+          type="submit"
+          className="bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={submitting}
+        >
+          {submitting ? 'Uploading...' : 'Upload'}
+        </button>
+      </form>
 
       {/* Team Gallery */}
       {tournamentDetails && (

@@ -3,16 +3,12 @@ import Cookies from 'js-cookie';
 import { API_URL } from './index';
 /**
  * Create a new tournament
- * @param {Object} tournamentData - Tournament data including name and logo
+ * @param {Object} formData - Tournament data including name and logo
  * @param {string} token - JWT token for authentication
  * @returns {Promise} - Response from the API
  */
-export const createTournament = async (tournamentData, token) => {
+export const createTournament = async (formData, token) => {
     try {
-        const formData = new FormData();
-        formData.append('name', tournamentData.name);
-        formData.append('logo', tournamentData.logo);
-
         const response = await fetch(`${API_URL}/users/tournaments`, {
             method: 'POST',
             headers: {
@@ -156,18 +152,13 @@ export const deleteTournament = async (tournamentId, token) => {
 /**
  * Add team to tournament
  * @param {string} tournamentId - ID of the tournament
- * @param {Object} teamData - Team data including name, tag and logo
+ * @param {Object} formData - Team data including name, tag and logo
  * @param {string} token - JWT token for authentication
  * @returns {Promise} - Response from the API
  */
-export const addTeamToTournament = async (tournamentId, teamData, token) => {
+export const addTeamToTournament = async (tournamentId, formData, token) => {
     try {
-        const formData = new FormData();
-        formData.append('teamName', teamData.teamName);
-        formData.append('teamTag', teamData.teamTag);
-        formData.append('logo', teamData.logo);
-
-        const response = await fetch(`${API_URL}/users/tournaments/${tournamentId}/teams`, {
+        const response = await fetch(`${API_URL}/users/tournaments/${tournamentId}/addteam`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,

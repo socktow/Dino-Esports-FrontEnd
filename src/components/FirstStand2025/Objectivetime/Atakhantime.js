@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { calculateProgress } from './utils';
+import { useMemo } from "react";
+import { getLightColor, calculateProgress } from './utils';
 
 const Atakhantime = ({ timer }) => {
   const progress = calculateProgress(timer);
-
   if (!timer) return null;
 
   const [minutes, seconds] = timer.timeLeft?.split(":").map(Number) || [0, 0];
@@ -22,7 +22,6 @@ const Atakhantime = ({ timer }) => {
           viewBox="0 0 8 8"
         >
           <circle
-            stroke={strokeColor}
             strokeWidth="1"
             fill="transparent"
             r="3.4"

@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 import { getTournamentsByUser, getTournamentById } from "@/api/tournamentapi";
 import { useAuth } from "../../../context/AuthContext";
+import { displayAPI } from "@/api";
 import { toast } from "react-hot-toast";
 
 const TeamConfig = () => {
+  const { user, token } = useAuth();
   const [teams, setTeams] = useState({
     teamA: {
       selectedTeam: "",
@@ -27,7 +29,37 @@ const TeamConfig = () => {
   const [selectedTournament, setSelectedTournament] = useState("");
   const [tournaments, setTournaments] = useState([]);
   const [tournamentDetails, setTournamentDetails] = useState(null);
-  const { user } = useAuth();
+
+  useEffect(() => {
+    const fetchDisplayData = async () => {
+      if (!user?.username || !token) return;
+      
+      try {
+        const data = await displayAPI.getDisplaySettings(token, user.username);
+        if (data?.teamConfig) {
+          setTeams({
+            teamA: {
+              ...teams.teamA,
+              name: data.teamConfig.redTeamName || "",
+              score: data.teamConfig.redTeamScore || 0,
+              logo: data.teamConfig.logoRedTeam || "",
+            },
+            teamB: {
+              ...teams.teamB,
+              name: data.teamConfig.blueTeamName || "",
+              score: data.teamConfig.blueTeamScore || 0,
+              logo: data.teamConfig.logoBlueTeam || "",
+            },
+          });
+          setSelectedFormat(data.teamConfig.formatMatch || "bo1");
+        }
+      } catch (error) {
+        console.error('Error fetching display settings:', error);
+      }
+    };
+
+    fetchDisplayData();
+  }, [user?.username, token]);
 
   useEffect(() => {
     const fetchTournaments = async () => {
@@ -98,7 +130,12 @@ const TeamConfig = () => {
     }));
   };
 
-  const handleSaveConfig = () => {
+  const handleSaveConfig = async () => {
+    if (!user?.username || !token) {
+      toast.error('Please login first');
+      return;
+    }
+
     if (!selectedTournament) {
       toast.error('Please select a tournament');
       return;
@@ -109,25 +146,22 @@ const TeamConfig = () => {
       return;
     }
 
-    const config = {
-      tournamentId: selectedTournament,
-      format: selectedFormat,
-      teams: [
-        {
-          team: teams.teamA.selectedTeam,
-          position: 'A',
-          score: teams.teamA.score
-        },
-        {
-          team: teams.teamB.selectedTeam,
-          position: 'B',
-          score: teams.teamB.score
-        }
-      ]
-    };
+    try {
+      const teamConfig = {
+        redTeamName: teams.teamA.name,
+        blueTeamName: teams.teamB.name,
+        redTeamScore: teams.teamA.score.toString(),
+        blueTeamScore: teams.teamB.score.toString(),
+        logoRedTeam: teams.teamA.logo,
+        logoBlueTeam: teams.teamB.logo,
+        formatMatch: selectedFormat
+      };
 
-    console.log('Team Configuration:', config);
-    toast.success('Configuration saved successfully');
+      await displayAPI.updateTeamConfig(token, user.username, teamConfig);
+      toast.success('Team configuration updated successfully');
+    } catch (error) {
+      toast.error(error.message || 'Failed to update team configuration');
+    }
   };
 
   const showScoreInput = selectedFormat !== "bo1";
@@ -137,11 +171,11 @@ const TeamConfig = () => {
       <h1 className="text-3xl font-bold text-white">Team Configuration</h1>
 
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Team A */}
+        {/* Red Team */}
         <div className="space-y-6">
           <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-semibold mb-6 text-blue-400">
-              Team A
+            <h2 className="text-2xl font-semibold mb-6 text-red-400">
+              Red Team
             </h2>
             <div className="space-y-4">
               <div>
@@ -278,10 +312,10 @@ const TeamConfig = () => {
           </div>
         </div>
 
-        {/* Team B */}
+        {/* Blue Team */}
         <div className="space-y-6">
           <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-semibold mb-6 text-red-400">Team B</h2>
+            <h2 className="text-2xl font-semibold mb-6 text-blue-400">Blue Team</h2>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">

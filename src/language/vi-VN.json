@@ -13,6 +13,12 @@
     "accountCreated": "Tài khoản được tạo vào",
     "loading": "Đang tải..."
   },
+  "nav": {
+    "home": "Trang chủ",
+    "team": "Đội ngũ",
+    "partner": "Đối tác",
+    "contact": "Liên hệ"
+  },
   "home": {
     "title": "Chuchu Esports",
     "subtitle": "Khám phá các chủ đề esports và giải đấu mới nhất. Khám phá bộ sưu tập LCK, LEC, LCP và FirstStand2025 của chúng tôi.",
@@ -26,12 +32,11 @@
       "description": "Truy cập bảng điều khiển cá nhân để quản lý chủ đề và cài đặt của bạn.",
       "button": "Đi đến Bảng điều khiển"
     },
-    "featuredTournaments": {
-      "title": "Giải đấu nổi bật",
-      "LCK": "Giải vô địch Hàn Quốc",
-      "LEC": "Giải vô địch Châu Âu",
-      "LCP": "Giải vô địch Chuyên nghiệp",
-      "FirstStand2025": "Giải đấu Frist Stand 2025"
+    "stats": {
+      "themes": "Giao Diện",
+      "users": "Người dùng",
+      "tournaments": "Giải đấu",
+      "support": "Hỗ trợ"
     }
   },
   "auth": {

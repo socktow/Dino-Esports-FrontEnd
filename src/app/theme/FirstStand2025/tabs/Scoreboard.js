@@ -18,7 +18,7 @@ export default function Scoreboard({ gameTime = "00:00", scoreboard = [] }) {
 
   return (
     <div className="w-full h-full flex justify-center items-center">
-      <div className="w-[260px] h-[110px] bg-black rounded-lg">
+      <div className="w-[260px] h-[110px] bg-black rounded-lg opacity-70">
         <div
           className="w-full h-full grid grid-rows-3 py-1"
           style={{ gridTemplateColumns: "120px 40px 40px 60px" }}

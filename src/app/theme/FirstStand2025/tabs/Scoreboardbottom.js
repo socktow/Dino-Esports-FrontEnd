@@ -170,9 +170,9 @@ export default function Scoreboardbottom({ playersdata = [], players = [] }) {
     <>
   
       <div className="mx-auto" style={{ width: "1260px", height: "260px" }}>
-        <div className="w-full h-full bg-black backdrop-blur-sm rounded-t-lg border border-gray-800 opacity-70">
+        <div className="w-full h-full bg-black backdrop-blur-sm rounded-t-lg border border-gray-800">
           <div className="w-full h-full flex justify-between">
-            <div className="w-full h-full bg-black-500/20">
+            <div className="w-full h-full bg-black-500/20 opacity-80">
               <div className="h-full flex flex-col justify-between py-1">
                 {blueTeam.map((player, index) =>
                   renderPlayer(

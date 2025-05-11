@@ -27,6 +27,7 @@ export const getResourceType = (championName) => {
     "Zed",
     "Shen",
     "Akali",
+    "Ambessa",
     "Kennen",
     "Rumble"
   ];
